@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "rol")
 @AllArgsConstructor
@@ -19,4 +22,7 @@ public class Rol {
 
     private String nombre;
     private int orden;
+
+    @OneToMany(mappedBy = "rol")
+    private List<Docente> docentes = new ArrayList<>();
 }

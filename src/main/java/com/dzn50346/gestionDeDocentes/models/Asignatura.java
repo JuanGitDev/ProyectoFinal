@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "asignatura")
 @AllArgsConstructor
@@ -22,4 +25,6 @@ public class Asignatura {
     private String codigo;
     private int horasSemanales;
 
+    @OneToMany(mappedBy = "asignatura")
+    private List<Horario> horarios = new ArrayList<>();
 }

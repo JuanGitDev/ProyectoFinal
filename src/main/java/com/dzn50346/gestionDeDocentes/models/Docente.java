@@ -32,4 +32,17 @@ public class Docente {
     @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AsuntoPropio> asuntosPropios = new ArrayList<>();
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "departamento_id", referencedColumnName = "id_departamento")
+    private Departamento departamento;
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
+
+    @OneToMany(mappedBy = "docente")
+    private List<Horario> horarios = new ArrayList<>();
+
+
+
 }

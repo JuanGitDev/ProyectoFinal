@@ -21,4 +21,12 @@ public class Horario {
     private int dia;
     private int hora;
     private String aula;
+
+    @ManyToOne
+    @JoinColumn(name = "docente_id")
+    private Docente docente;
+
+    @ManyToOne
+    @JoinColumn(name = "asignatura_id")
+    private Asignatura asignatura;
 }
