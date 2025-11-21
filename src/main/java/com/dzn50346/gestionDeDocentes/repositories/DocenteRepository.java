@@ -1,5 +1,6 @@
-package com.dzn50346.gestionDeDocentes.docente;
+package com.dzn50346.gestionDeDocentes.repositories;
 
+import com.dzn50346.gestionDeDocentes.models.Docente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,5 +1,6 @@
-package com.dzn50346.gestionDeDocentes.falta;
+package com.dzn50346.gestionDeDocentes.repositories;
 
+import com.dzn50346.gestionDeDocentes.models.Falta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

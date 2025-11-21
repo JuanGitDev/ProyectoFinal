@@ -1,6 +1,5 @@
-package com.dzn50346.gestionDeDocentes.asuntoPropio;
+package com.dzn50346.gestionDeDocentes.models;
 
-import com.dzn50346.gestionDeDocentes.docente.Docente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "asuntoPropio")

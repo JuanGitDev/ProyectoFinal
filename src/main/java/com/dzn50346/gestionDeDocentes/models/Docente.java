@@ -1,6 +1,5 @@
-package com.dzn50346.gestionDeDocentes.docente;
+package com.dzn50346.gestionDeDocentes.models;
 
-import com.dzn50346.gestionDeDocentes.asuntoPropio.AsuntoPropio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

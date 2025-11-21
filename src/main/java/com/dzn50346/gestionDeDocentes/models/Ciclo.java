@@ -1,4 +1,4 @@
-package com.dzn50346.gestionDeDocentes.ciclo;
+package com.dzn50346.gestionDeDocentes.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

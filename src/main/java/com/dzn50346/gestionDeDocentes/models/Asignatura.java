@@ -1,4 +1,4 @@
-package com.dzn50346.gestionDeDocentes.departamento;
+package com.dzn50346.gestionDeDocentes.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,18 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "departamento")
+@Table(name = "asignatura")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Departamento {
+public class Asignatura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id_departamento")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_asignatura")
     private int id;
 
     private String nombre;
     private String codigo;
-    private String telefono;
+    private int horasSemanales;
+
 }

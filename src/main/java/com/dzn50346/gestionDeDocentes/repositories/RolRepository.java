@@ -1,5 +1,6 @@
-package com.dzn50346.gestionDeDocentes.rol;
+package com.dzn50346.gestionDeDocentes.repositories;
 
+import com.dzn50346.gestionDeDocentes.models.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
