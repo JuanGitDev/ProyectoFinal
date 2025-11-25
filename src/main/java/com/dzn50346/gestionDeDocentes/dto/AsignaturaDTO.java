@@ -15,4 +15,6 @@ public class AsignaturaDTO {
     private String nombreDTO;
     private String codigoDTO;
     private int horasSemanalesDTO;
+    private int idCicloDTO;
+    private int idHorarioDTO;
 }

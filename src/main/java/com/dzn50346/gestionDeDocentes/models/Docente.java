@@ -43,6 +43,7 @@ public class Docente {
     @OneToMany(mappedBy = "docente")
     private List<Horario> horarios = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Falta> faltasRegistradas = new ArrayList<>();
 
 }

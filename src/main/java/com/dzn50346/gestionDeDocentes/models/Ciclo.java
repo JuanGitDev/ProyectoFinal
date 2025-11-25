@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ciclo")
 @AllArgsConstructor
@@ -21,4 +24,7 @@ public class Ciclo {
     private String nombre;
     private String familia;
     private String codigo;
+
+    @OneToMany(mappedBy = "asignatura", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Asignatura> asignaturas = new ArrayList<>();
 }

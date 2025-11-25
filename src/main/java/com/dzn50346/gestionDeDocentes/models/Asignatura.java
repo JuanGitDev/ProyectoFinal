@@ -27,4 +27,8 @@ public class Asignatura {
 
     @OneToMany(mappedBy = "asignatura")
     private List<Horario> horarios = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "ciclo_id")
+    private Ciclo ciclo;
 }

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "horario")
 @AllArgsConstructor
@@ -29,4 +32,7 @@ public class Horario {
     @ManyToOne
     @JoinColumn(name = "asignatura_id")
     private Asignatura asignatura;
+
+    @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Falta> faltas = new ArrayList<>();
 }
