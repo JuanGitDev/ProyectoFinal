@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -12,9 +14,9 @@ import lombok.Setter;
 public class AsuntoPropioDTO {
 
     private int idDTO;
-    private String diaSolicitadoDTO;
+    private Date diaSolicitadoDTO;
     private String descripcionDTO;
-    private String fechaTramitacionDTO;
+    private Date fechaTramitacionDTO;
     private boolean aprobadoDTO;
     private int idDocenteDTO;
 

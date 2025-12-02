@@ -1,12 +1,10 @@
 package com.dzn50346.gestionDeDocentes.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "asuntoPropio")
@@ -20,9 +18,12 @@ public class AsuntoPropio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id_asunto_propio")
     private int id;
 
-    private LocalDate diaSolicitado;
+    @NonNull
+    private Date diaSolicitado;
     private String descripcion;
-    private LocalDate fechaTramitacion;
+
+    @NonNull
+    private Date fechaTramitacion;
     private boolean aprobado;
 
     @ManyToOne
