@@ -22,8 +22,7 @@ public class AsuntoPropio {
     private Date diaSolicitado;
     private String descripcion;
 
-    @NonNull
-    private Date fechaTramitacion;
+    private LocalDate fechaTramitacion;
     private boolean aprobado;
 
     @ManyToOne
