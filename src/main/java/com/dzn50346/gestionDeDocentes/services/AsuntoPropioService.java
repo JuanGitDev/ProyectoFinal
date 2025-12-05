@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AsuntoPropioService {
@@ -18,46 +19,47 @@ public class AsuntoPropioService {
     DocenteRepository docenteRepository;
 
     @Autowired
-    public AsuntoPropioService(AsuntoPropioRepository repository) {
+    public AsuntoPropioService(AsuntoPropioRepository repository, DocenteRepository docenteRepository) {
         this.repository = repository;
+        this.docenteRepository = docenteRepository;
     }
 
     public AsuntoPropio getAsuntoPropioByID (int id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Asunto propio no encontrado con id: " + id));
     }
 
-    public AsuntoPropioDTO solicitarDiaAsuntoPropio(AsuntoPropioDTO asuntoPropioDTO){
-        AsuntoPropio asuntoPropio = new AsuntoPropio();
-
-        Docente docente = docenteRepository.findById(asuntoPropioDTO.getIdDocenteDTO()).orElseThrow(()-> new RuntimeException("No se encuentra el docente especificado"));
-
-        asuntoPropio.setDiaSolicitado(asuntoPropioDTO.getDiaSolicitadoDTO());
-        asuntoPropio.setDescripcion(asuntoPropio.getDescripcion());
-        asuntoPropio.setFechaTramitacion(null);
-        asuntoPropio.setAprobado(false);
-        asuntoPropio.setDocente(docente);
-
-        return mapToDTO(asuntoPropio);
+    public List<AsuntoPropio> getAllAsuntoPropio(){
+        return repository.findAll();
     }
 
-    public AsuntoPropio validarAsuntoPropio(int id, boolean aprobado){
-        AsuntoPropio asuntoPropio = repository.findById(id).orElseThrow(()-> new RuntimeException("Asunto propio no encontrado con id:" + id));
+    public AsuntoPropio solicitarDiaAsuntoPropio(AsuntoPropioDTO asuntoPropioDTO) throws Exception{
+        Docente docente = docenteRepository.findById(asuntoPropioDTO.getIdDocenteDTO()).orElseThrow(()-> new RuntimeException("No se encuentra el docente especificado"));
+
+        try {
+            AsuntoPropio newAsuntoPropio = AsuntoPropio.builder()
+                    .diaSolicitado(asuntoPropioDTO.getDiaSolicitadoDTO())
+                    .descripcion(asuntoPropioDTO.getDescripcionDTO())
+                    .aprobado(false)
+                    .docente(docente)
+                    .fechaTramitacion(null)
+                    .build();
+
+            repository.save(newAsuntoPropio);
+
+            int asuntoPropioTableQuantity = (int) repository.findAll().size();
+            return repository.findById(asuntoPropioTableQuantity).orElseThrow(()-> new RuntimeException("Asunto propio no encontrado"));
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar " + e);
+        }
+    }
+
+    public AsuntoPropio validarAsuntoPropio(AsuntoPropioDTO dto, int id){
+        AsuntoPropio asuntoPropio = repository.findById(id).orElseThrow(()-> new RuntimeException("Asunto propio no encontrado con id: " + id));
         LocalDate ahora = LocalDate.now();
-        asuntoPropio.setAprobado(aprobado);
+
+        asuntoPropio.setAprobado(dto.isAprobadoDTO());
         asuntoPropio.setFechaTramitacion(ahora);
 
         return repository.save(asuntoPropio);
-    }
-
-    public AsuntoPropioDTO mapToDTO(AsuntoPropio asuntoPropio){
-        AsuntoPropioDTO dto = new AsuntoPropioDTO();
-
-        dto.setIdDTO(asuntoPropio.getId());
-        dto.setDiaSolicitadoDTO(asuntoPropio.getDiaSolicitado());
-        dto.setDescripcionDTO(asuntoPropio.getDescripcion());
-        dto.setFechaTramitacionDTO(asuntoPropio.getFechaTramitacion());
-        dto.setIdDocenteDTO(asuntoPropio.getDocente().getId());
-
-        return dto;
     }
 }

@@ -16,5 +16,4 @@ public class AsignaturaDTO {
     private String codigoDTO;
     private int horasSemanalesDTO;
     private int idCicloDTO;
-    private int idHorarioDTO;
 }

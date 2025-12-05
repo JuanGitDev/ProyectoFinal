@@ -1,10 +1,7 @@
 package com.dzn50346.gestionDeDocentes.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Ciclo {
 
     @Id
@@ -25,6 +23,6 @@ public class Ciclo {
     private String familia;
     private String codigo;
 
-    @OneToMany(mappedBy = "asignatura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ciclo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asignatura> asignaturas = new ArrayList<>();
 }
