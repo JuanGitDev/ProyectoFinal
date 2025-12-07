@@ -1,5 +1,6 @@
 package com.dzn50346.gestionDeDocentes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Asignatura {
     @OneToMany(mappedBy = "asignatura")
     private List<Horario> horarios = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ciclo_id")
     private Ciclo ciclo;

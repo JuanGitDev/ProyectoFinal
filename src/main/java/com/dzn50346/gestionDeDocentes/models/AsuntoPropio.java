@@ -1,5 +1,6 @@
 package com.dzn50346.gestionDeDocentes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "asuntoPropio")
+@Table(name = "asunto_propio")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,7 +17,8 @@ import java.util.Date;
 public class AsuntoPropio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id_asunto_propio")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_asunto_propio")
     private int id;
 
     @NonNull
@@ -26,6 +28,7 @@ public class AsuntoPropio {
     private LocalDate fechaTramitacion;
     private boolean aprobado;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_docente")
     private Docente docente;

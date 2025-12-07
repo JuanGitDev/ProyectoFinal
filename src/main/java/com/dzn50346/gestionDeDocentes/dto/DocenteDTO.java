@@ -1,5 +1,14 @@
 package com.dzn50346.gestionDeDocentes.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class DocenteDTO {
     private int idDTO;
     private String nombreDTO;

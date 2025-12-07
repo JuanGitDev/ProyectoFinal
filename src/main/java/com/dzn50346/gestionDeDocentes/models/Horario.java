@@ -1,5 +1,6 @@
 package com.dzn50346.gestionDeDocentes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,10 +24,12 @@ public class Horario {
     private int hora;
     private String aula;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "docente_id")
     private Docente docente;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "asignatura_id")
     private Asignatura asignatura;

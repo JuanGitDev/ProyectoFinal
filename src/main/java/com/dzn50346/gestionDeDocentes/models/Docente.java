@@ -1,5 +1,6 @@
 package com.dzn50346.gestionDeDocentes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class Docente {
     @Id
     @Column(name = "id_docente")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nombre;
@@ -24,16 +26,18 @@ public class Docente {
     private String email;
     private String siglas;
     private String tipo;
-    private LocalDate antiguedad;
+    private String antiguedad;
     private int posicion;
 
     @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AsuntoPropio> asuntosPropios = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departamento_id", referencedColumnName = "id_departamento")
     private Departamento departamento;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private Rol rol;
