@@ -1,6 +1,7 @@
 package com.dzn50346.gestionDeDocentes.controllers;
 
 import com.dzn50346.gestionDeDocentes.dto.DocenteDTO;
+import com.dzn50346.gestionDeDocentes.dto.DocenteDepartamentoDTO;
 import com.dzn50346.gestionDeDocentes.services.DocenteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,11 @@ public class DocenteController {
     @GetMapping(path = "/mostrarDocentes")
     public List<DocenteDTO> mostrarDocentes () throws Exception{
         return service.mostrarDocentes();
+    }
+
+    @GetMapping(path = "/docentesConDepartamentos")
+    public List<DocenteDepartamentoDTO> mostrarDocenteConDepartamento(){
+        return service.mostrarDocentesConDepto();
     }
 
     @GetMapping(path = "/getDocentesOrdenadosPorApellidos")
