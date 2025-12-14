@@ -11,4 +11,8 @@ public interface DocenteRepository extends JpaRepository<Docente, Integer> {
     Optional<Docente> findById(Integer id);
 
     List<Docente> findAllByOrderByApellidosAsc();
+
+    List<Docente> findByDepartamentoNombre(String nombre);
+
+    long countByDepartamentoCodigo(String codigo);
 }

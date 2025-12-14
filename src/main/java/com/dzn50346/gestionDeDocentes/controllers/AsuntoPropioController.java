@@ -20,7 +20,7 @@ public class AsuntoPropioController {
     }
 
     @GetMapping(path = "")
-    public List<AsuntoPropioDTO> index(){
+    public List<AsuntoPropioDTO> index() {
         return service.getAllAsuntoPropio();
     }
 
@@ -31,8 +31,13 @@ public class AsuntoPropioController {
     }
 
     @GetMapping(path = "/{id}/consultarDiasPropios")
-    public List<AsuntoPropioDTO> mostrarDiasPropios(@NonNull @PathVariable("id") int id){
+    public List<AsuntoPropioDTO> mostrarDiasPropios(@NonNull @PathVariable("id") int id) {
         return service.consultarDiasPropios(id);
+    }
+
+    @GetMapping(path = "/pendientesDeDisfrutar")
+    public List<AsuntoPropioDTO> getAsuntosPropiosPendientesDeDisfrutar() {
+        return service.getAsuntosPropiosPendientesDeDisfrutar();
     }
 
     @PostMapping(path = "")
@@ -42,7 +47,7 @@ public class AsuntoPropioController {
     }
 
     @PutMapping(path = "/{id}/validar")
-    public ResponseEntity<AsuntoPropioDTO> update(@PathVariable("id") int id, @RequestBody AsuntoPropioDTO dto){
+    public ResponseEntity<AsuntoPropioDTO> update(@PathVariable("id") int id, @RequestBody AsuntoPropioDTO dto) {
         AsuntoPropioDTO asuntoPropio = service.validarAsuntoPropio(id, dto.isAprobadoDTO());
         return ResponseEntity.accepted().body(asuntoPropio);
     }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,21 @@ public class AsuntoPropioService {
         Docente docente = docenteRepository.findById(asuntoPropioDTO.getIdDocenteDTO())
                 .orElseThrow(() -> new RuntimeException("No se encuentra el docente especificado"));
 
+        if (asuntoPropioDTO.getDiaSolicitadoDTO().before(new Date())) {
+            throw new RuntimeException("La fecha solicitada no puede ser en el pasado.");
+        }
+
+        List<AsuntoPropio> asuntosAprobados = repository.findByDocenteAndAprobado(docente, true);
+        int trimestreSolicitado = getTrimestre(asuntoPropioDTO.getDiaSolicitadoDTO());
+
+        boolean yaTieneEnTrimestre = asuntosAprobados.stream()
+                .anyMatch(asunto -> getTrimestre(asunto.getDiaSolicitado()) == trimestreSolicitado);
+
+        if (yaTieneEnTrimestre) {
+            throw new RuntimeException("El docente ya ha disfrutado de un día de asuntos propios en este trimestre.");
+        }
+
+
         AsuntoPropio newAsuntoPropio = new AsuntoPropio();
         newAsuntoPropio.setDiaSolicitado(asuntoPropioDTO.getDiaSolicitadoDTO());
         newAsuntoPropio.setDescripcion(asuntoPropioDTO.getDescripcionDTO());
@@ -65,6 +82,12 @@ public class AsuntoPropioService {
         return mapToDTO(updatedAsuntoPropio);
     }
 
+    public List<AsuntoPropioDTO> getAsuntosPropiosPendientesDeDisfrutar() {
+        return repository.findByAprobadoAndDiaSolicitadoAfter(true, new Date()).stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     public AsuntoPropioDTO mapToDTO(AsuntoPropio asuntoPropio) {
         AsuntoPropioDTO dto = new AsuntoPropioDTO();
         dto.setIdDTO(asuntoPropio.getId());
@@ -74,5 +97,10 @@ public class AsuntoPropioService {
         dto.setAprobadoDTO(asuntoPropio.isAprobado());
         dto.setIdDocenteDTO(asuntoPropio.getDocente().getId());
         return dto;
+    }
+
+    private int getTrimestre(Date date) {
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return (localDate.getMonthValue() - 1) / 3 + 1;
     }
 }

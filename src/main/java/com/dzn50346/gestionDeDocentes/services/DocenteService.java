@@ -4,6 +4,7 @@ import com.dzn50346.gestionDeDocentes.dto.DocenteDTO;
 import com.dzn50346.gestionDeDocentes.dto.DocenteDepartamentoDTO;
 import com.dzn50346.gestionDeDocentes.models.Departamento;
 import com.dzn50346.gestionDeDocentes.models.Docente;
+import com.dzn50346.gestionDeDocentes.repositories.AsuntoPropioRepository;
 import com.dzn50346.gestionDeDocentes.repositories.DepartamentoRepository;
 import com.dzn50346.gestionDeDocentes.repositories.DocenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ public class DocenteService {
 
     private final DocenteRepository repository;
     private final DepartamentoRepository departamentoRepository;
+    private final AsuntoPropioRepository asuntoPropioRepository;
 
     @Autowired
-    public DocenteService(DocenteRepository repository, DepartamentoRepository departamentoRepository) {
+    public DocenteService(DocenteRepository repository, DepartamentoRepository departamentoRepository, AsuntoPropioRepository asuntoPropioRepository) {
         this.repository = repository;
         this.departamentoRepository = departamentoRepository;
+        this.asuntoPropioRepository = asuntoPropioRepository;
     }
 
     public List<DocenteDTO> mostrarDocentes(){
@@ -40,6 +43,24 @@ public class DocenteService {
         return docentes.stream()
                 .map(this::mapToDTO)
                 .toList();
+    }
+
+    public List<DocenteDTO> getDocentesPorDepartamento(String nombreDepto) {
+        return repository.findByDepartamentoNombre(nombreDepto).stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    public long getNumeroDocentesPorDepartamento(String codigoDepto) {
+        return repository.countByDepartamentoCodigo(codigoDepto);
+    }
+
+    public DocenteDTO getDocenteConMasAsuntosPropiosDisfrutados() {
+        List<Docente> docentes = asuntoPropioRepository.findDocenteWithMostAsuntosPropiosDisfrutados();
+        if (docentes.isEmpty()) {
+            return null; // O lanzar una excepción
+        }
+        return mapToDTO(docentes.get(0));
     }
 
     public DocenteDTO createDocente(DocenteDTO docenteDTO){
